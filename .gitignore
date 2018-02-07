@@ -3,3 +3,4 @@ ses
 *.cmo
 *.cmi
 *.o
+*.exe
