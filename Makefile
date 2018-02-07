@@ -31,10 +31,10 @@ packages=str,netcgi2,netstring,netsys,unix,bigarray,pcre,netstring,mysql,xml-lig
 
 syntax_packages=json-tc.syntax,dyntype.syntax
 
-drakskatten_cgi.exe: deriving.cmx $(objects_cmx) $(patsubst %.ml,%.cmx,$(controller_objects)) drakskatten.ml
+drakskatten_cgi.exe: $(objects_cmx) $(patsubst %.ml,%.cmx,$(controller_objects)) drakskatten.ml
 	@ocamlfind ocamlopt -g -thread -linkpkg -package $(packages),json-tc.syntax,dyntype,js_of_ocaml.deriving dyntype.cmxa $^ -o $@ 
 
-drakskatten_ajax.exe: deriving.cmx $(objects_cmx) $(patsubst %.ml,%.cmx,$(controller_objects)) drakskatten_ajax.ml
+drakskatten_ajax.exe: $(objects_cmx) $(patsubst %.ml,%.cmx,$(controller_objects)) drakskatten_ajax.ml
 	@ocamlfind ocamlopt -g -thread -linkpkg -package $(packages),js_of_ocaml.deriving,json-tc.syntax,dyntype dyntype.cmxa $^ -o $@
 
 # For javascript, just copy files to target dir

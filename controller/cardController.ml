@@ -135,6 +135,7 @@ let _ =
 		Send card list for a game
 		Used by choose card to edit script
 	*)
+  (*
 	add_op_ajax_login
 		"card"
 		"list_of_cards_for_game"
@@ -161,3 +162,4 @@ let _ =
 			let cards_string = Json_io.string_of_json cards_json in*)
 			args.echo cards_string2;
 		);;
+  *)
