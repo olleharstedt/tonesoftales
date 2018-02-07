@@ -1,0 +1,30 @@
+<fieldset>
+	<legend>Edit card</legend>
+	<form method=post action=drakskatten enctype='multipart/form-data'>
+		<input type=hidden name=op value=save_edit_card />
+		<input type=hidden name=module value=card />
+		<input type=hidden name=card_id value={{id}} />
+		<table>
+			<tr>
+				<th>Title</th>
+				<td><input type=text readonly name=title maxlength=100 value='{{title}}'></td>
+			</tr>
+			<tr>
+				<th valign=top>Text</th>
+				<td><textarea name=text cols=50 rows=8 >{{text}}</textarea></td>
+			</tr>
+			<tr>
+				<th valign=bottom>Image</th>
+				<td><input type=file name=img id=img value='{{img}}' /><img src='/drakskatten/upload/{{username}}/{{img}}' /></td>
+			</tr>
+			<tr>
+				<th>Sound</th>
+				<td><input type=file name=sound id=sound /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type=submit value='Save changes' /></td>
+			</tr>
+		</table>
+	</form>
+</fieldset>

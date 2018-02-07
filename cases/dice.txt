@@ -1,0 +1,5 @@
+2013-10-20
+
+Dice
+
+Kunna lägga till tärningar i slots, både table slots och player slots.

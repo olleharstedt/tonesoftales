@@ -1,0 +1,5 @@
+Lära sig Coq
+Started: 2013-09-11
+
+Kan användas i framtiden för att göra supersäkra moduler. Och för att bevisa rekursiva funktioner.
+Använda till LUA-modulen, för att bevisa att stacken alltid är tom efter användning?

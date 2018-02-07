@@ -1,0 +1,7 @@
+2013-10-17
+
+Logga in som gäst
+Begränsad funktionalitet, t.ex. bara quickmatch? Inte skapa spel.
+
+Ha 100 eller 1'000 gästkonton alla kan använda?
+Skapa nytt konto om alla är upptagna.

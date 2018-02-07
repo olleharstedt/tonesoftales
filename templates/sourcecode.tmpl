@@ -1,0 +1,53 @@
+
+<fieldset>
+	<legend>Source code</legend>
+	<p>All games made by the site developer are open source. Choose game in the list to browse the code.</p>
+	<p>Press F11 to enter fullscreen mode. Press F11 or Esc to exit.</p>
+	<table>
+		<tr>
+			<th>Choose game</th>
+			<td>
+				<select id=game_select onchange='choose_opensource();'>
+					<option value=-1>Choose game</option>
+					{% for game in games %}
+						<option value='{{game.id}}'>{{game.name}}</option>
+					{% endfor %}
+				</select>
+			</td>
+		</tr>
+	</table>
+	<br />
+	<form id=init_script_form>
+		<input type=hidden name=op value=save_init_script />
+		<input type=hidden name=module value=game />
+		<textarea id=editor name=init_script ></textarea><br />
+		<p>onplay_all is run for <i>every</i> card in the game when it's being played.</p>
+		<textarea id=editor2 name=onplay_all ></textarea><br />
+		<p>onpickup_all is run for every card in the game when it's being picked up.</p>
+		<textarea id=editor5 name=onpickup_all ></textarea><br />
+		<p>onendturn is run when the turn ends, for the ending player.</p>
+		<textarea id=editor3 name=onendturn></textarea><br />
+		<p>onbeginturn is run for the new players turn.</p>
+		<textarea id=editor4 name=onbeginturn></textarea><br />
+	</form>
+
+	<div id=right >
+	</div>
+
+</fieldset>
+
+<script>
+	$(document).ready(function() {
+		choose_init_script_game();
+		codemirror.setSize(700, 500);
+		codemirror2.setSize(700, 500);
+		codemirror3.setSize(700, 500);
+		codemirror4.setSize(700, 500);
+		codemirror5.setSize(700, 500);
+		codemirror.options.readOnly = true;
+		codemirror2.options.readOnly = true;
+		codemirror3.options.readOnly = true;
+		codemirror4.options.readOnly = true;
+		codemirror5.options.readOnly = true;
+	});
+</script>

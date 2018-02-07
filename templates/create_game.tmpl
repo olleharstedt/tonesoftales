@@ -1,0 +1,116 @@
+<ul id="quickmenu">
+	<li>Quickmenu
+		<ul>
+			<li><a href='?op=add_card_form&module=card'>Add card</a></li>
+			<li><a href='?op=edit_card_choose&module=card'>Edit card</a></li>
+			<li><a href='?op=add_deck_form&module=deck'>Add deck</a></li>
+			<li><a href='?op=edit_deck_choose&module=deck'>Edit deck</a></li>
+			<li><a href='?op=add_card_deck_form&module=deck'>Add card to deck</a></li>
+			<td><a href='?op=edit_game_choose&module=game'>Edit game</a></td>
+			<li><a href='?op=add_game_form&module=game'>Add game</a></li>
+			<li><a href='?op=edit_game_choose&module=game'>Edit game</a></li>
+			<li><a href='?op=add_deck_to_game_form&module=game'>Add deck to game</a></li>
+			<li><a href='?op=edit_init_script_form&module=game'>Edit script</a></li>
+			<li><a href='?op=choose_script_card&module=game'>Edit script for card</a></li>
+			<li><a href='?op=list_decks&module=deck'>List decks</a></li>
+			<li><a href='?op=list_games_choose&module=game'>List games</a></li>
+		</ul>
+	</li>
+</ul>
+
+<p>Tones of tales have some powerful features to handle graphics. For historical reasons, these are called <code>cards</code> and <code>decks</code>, but could just as well be called sprites and collections.</p>
+<fieldset>
+	<legend>Cards</legend>
+	<p>Cards are the building blocks of games in Tones of tales. You create cards to add them to decks, building up a library of graphical elements. A card can belong to any number of decks, in any number of copies.</p>
+	<p>A card can be displayed in a number of ways: rotated, shifted left or top, facing up or down. See the description of data structures on the <a href='http://localhost/cgi-bin/drakskatten?op=doc_api&module=startpage'><u>API page</u></a> for further information.</p>
+	<table>
+		<tr> 
+			<td><a href='?op=add_card_form&module=card'><img src='/img/card.png' /></a></td>
+			<td><a href='?op=add_card_form&module=card'>Add card</a></td>
+			<td class=note>This will add a card to your library of cards. The cards are used to construct decks.</td>
+		</tr>
+		<tr>
+			<td><a href='?op=edit_card_choose&module=card'><img src='/img/edit_card.png' /></a></td>
+			<td><a href='?op=edit_card_choose&module=card'>Edit card</a></td>
+			<td class=note>Modify an already created card.</td>
+		</tr>
+	</table>
+</fieldset>
+
+<br />
+
+<fieldset>
+	<legend>Decks</legend>
+	<p>Decks function as collections of graphical elements. In the Lua script, you can access the cards in the decks as <code>deck1.cards, deck2.cards, ...</code> Some miscellaneous functions are provided to shuffle the deck and setting values for the standard deck.</p>
+	<table>
+		<tr>
+			<td class='center' ><a href='?op=add_deck_form&module=deck'><img src='/img/deck.png' /></a></td>
+			<td><a href='?op=add_deck_form&module=deck'>Add deck</a></td>
+			<td class=note>Create a new deck. You can add cards to the deck, which can be used in games.</td>
+		</tr>
+		<tr>
+			<td class='center' ><a href='?op=edit_deck_choose&module=deck'><img src='/img/edit_deck.png' /></a></td>
+			<td><a href='?op=edit_deck_choose&module=deck'>Edit deck</a></td>
+			<td class=note>Modify an already created deck.</td>
+		</tr>
+		<tr>
+			<td class='center'><a href='?op=add_card_deck_form&module=deck'><img src='/img/card_to_deck.png' /></a></td>
+			<td><a href='?op=add_card_deck_form&module=deck'>Add card to deck</a></td>
+			<td class=note>Add a card to a deck, building up the deck.</td>
+		</tr>
+	</table>
+</fieldset>
+
+<br />
+
+<fieldset>
+	<legend>Games</legend>
+	<p>The game is the top object in the hierarchy, owning decks which in turn own cards. The game holds the Lua script, which is the heart of each game, and where all the fun stuff happens.</p>
+	<table>
+		<tr>
+			<td class='center'><a href='?op=add_game_form&module=game'><img src='/img/add_game.png' /></a></td>
+			<td><a href='?op=add_game_form&module=game'>Add game</a></td>
+			<td class=note>Create a new game.</td>
+		</tr>
+		<tr>
+			<td class='center'><a href='?op=edit_game_choose&module=game'><img src='/img/edit_game.png' /></a></td>
+			<td><a href='?op=edit_game_choose&module=game'>Edit game</a></td>
+			<td class=note>Modify an alreay created game.</td>
+		</tr>
+		<tr>
+			<td class='center'><a href='?op=add_deck_to_game_form&module=game'><img src='/img/deck_to_game.png' /></a></td>
+			<td><a href='?op=add_deck_to_game_form&module=game'>Add deck to game</a></td>
+			<td class=note>Add a deck to a game, making it accessible through the Lua script.</td>
+		</tr> 
+		<tr>
+			<td class='center'><a href='?op=edit_init_script_form&module=game'><img src='/img/edit_script.png' /></a></td>
+			<td><a href='?op=edit_init_script_form&module=game'>Edit script</a></td>
+			<td class=note>Edit the Lua script of the game. You will spend most of your time here.</td>
+		</tr>
+		<tr>
+			<td class='center'><a href='?op=choose_script_card&module=game'><img src='/img/script_card.png' /></a></td>
+			<td><a href='?op=choose_script_card&module=game'>Edit script for card</a></td>
+			<td class=note>Each card can have it's own script.</td>
+		</tr>
+	</table>
+</fieldset>
+
+<br />
+
+<fieldset>
+	<legend>Lists</legend>
+	<p>These lists come in handy when you want to get an overview of your decks.</p>
+	<table>
+		<tr>
+			<td><a href='?op=list_decks&module=deck'><img src='/img/deck_list.png' /></a></td>
+			<td><a href='?op=list_decks&module=deck'>List decks</a></td>
+			<td class=note>List all decks. Good for inspection.</td>
+		</tr>
+		<tr>
+			<td><a href='?op=list_games_choose&module=game'><img src='/img/game_list.png' /></a></td>
+			<td><a href='?op=list_games_choose&module=game'>List games</a></td>
+			<td class=note>List the scripts for cards in a game.</td>
+		</tr>
+	</table>
+</fieldset>
+</fieldset>

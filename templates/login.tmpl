@@ -1,0 +1,30 @@
+<fieldset style='width: 700px;'>
+	<legend><b>Login</b></legend>
+	<form method=post action=/login.php>
+		<input type=hidden name=op value=login />
+		<input type=hidden name=module value=user />
+		<table>
+			<tr>
+				<td></td>
+				<td>Please login to play and create games. You can also login as <span class=anchor onclick='guest_login(); return false;'><u>guest</u></span> if you want to try it out.</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<th style='text-align: right;'>Username</th>
+				<td><input type=text name=username maxlength=100/></td>
+			</tr>
+			<tr>
+				<th style='text-align: right;'>Password</th>
+				<td><input type=password name=password maxlength=100/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input class='button' type=submit value=Login></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td class=note><span href='' class=anchor onclick='window.location.href="/cgi-bin/drakskatten?op=register_form&module=user";'>Register</span> an account, or login as <span class=anchor onclick='guest_login(); return false;'>guest</span>.</td>
+			</tr>
+		</table>
+	</form>
+</fieldset>

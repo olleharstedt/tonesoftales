@@ -1,0 +1,8 @@
+2013-11-20
+
+enable_onclick(cards, callback)
+enable_onclick(cards, function(player, card) end)
+
+Olika callbacks för olika kort?
+
+Funkar bara på kort som är vända uppåt, eftersom card_nr behövs.

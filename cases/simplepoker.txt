@@ -1,0 +1,7 @@
+Enkel version av poker
+Started: 2013-09-24
+Ended:
+
+Byt kort två gånger. Visa. Person med högst kombination vinner.
+
+Använder action pick_card, och enable_marking för att välja vilka kort som ska bytas.

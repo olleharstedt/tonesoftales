@@ -1,0 +1,287 @@
+<script>
+
+//toggle1 = 1;
+
+function play_game() {
+
+	$('#add').show(500);
+	$('#add_note').show(500);
+	$('#join').show(500);
+	$('#join_note').show(500);
+
+	/*
+	else {
+		$('#add').hide(250)
+		$('#add_note').hide(250)
+		$('#join').hide(250)
+		$('#join_note').hide(250)
+		toggle1 = 1 - toggle1;
+	}
+	*/
+
+	return false;
+}
+
+function new_game_session() {
+	$('#own').show(500);
+	$('#own_note').show(500);
+	$('#other').show(500);
+	$('#other_note').show(500);
+}
+
+
+</script>
+
+<table>
+	<tr>
+		<td><img src='/img/play.jpg' /></td>
+		<td colspan=4><a href='?op=play_game&module=startpage' onclick='play_game(); return false;'>Play game</a></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td class='note' colspan=4>Play with your friends. Choose among different games created by other users.</td>
+	</tr>
+	<tr style='display: none' id='add'>
+		<td></td>
+		<td style='width: 40px;'><img src='/img/add.png' /></td>
+		<td colspan=4><a onclick='new_game_session(); return false;' href='?op=new_game&module=game'>New game session</a></td>
+	</tr>
+	<tr style='display: none' id='add_note'>
+		<td></td>
+		<td></td>
+		<td colspan=4 class='note'>Create a new game session where your friends can join you.</td>
+	</tr>
+
+	<!-- Submenu for new session -->
+	<tr style='display: none;' id='own'>
+		<td></td>
+		<td></td>
+		<td><img src='/img/beta.png' /></td>
+		<td><a href='?op=new_own_game&module=game'>Create session from one of your games</a></td>
+	</tr>
+	<tr style='display: none;' id='own_note'>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td class='note'>This will allow you to choose a game from your own game library. Useful for testing. If the session is made public, it will appear in the "existent session" list.</td>
+	</tr>
+	<tr style='display: none;' id='other'>
+		<td></td>
+		<td></td>
+		<td><img src='/img/look.png' /></td>
+		<td><a href='?op=search_game&module=game'>Search other games</a></td>
+	</tr>
+	<tr style='display: none;' id='other_note'>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td class='note'>Search through games created by other users. Look here for new experiences!</td>
+	</tr>
+
+	<tr style='display: none' id='join'>
+		<td></td>
+		<td><img src='/img/join.png' /></td>
+		<td colspan=4><a href='?op=session_search&module=gamesession'>Join existent session</a></td>
+	</tr>
+	<tr style='display: none' id='join_note'>
+		<td></td>
+		<td></td>
+		<td colspan=4 class='note'>Join a session already created. You will see a list of session where the game has yet not started.</td>
+	</tr>
+	<tr>
+		<td><img src='/img/make.png' /></td>
+		<td colspan=4><a href='?op=create_game&module=startpage'> Make game</a></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td class='note' colspan=4>Using the scripting language Lua, you can create your own card game, uploade your own cards and decks, etc.</td>
+	</tr>
+</table>
+
+<br />
+
+<fieldset>
+	<legend>Quickmatch</legend>
+	<p>Quickmatch is a way to easy join a game with other users.</p>
+	<!--<p class=note style='width: 100%'>Choose a game in the list below. Information will appear to the right, whether you're new online or if someone else is already waiting for a game in a lobby. If you are new, you will open a new lobby when you press "Play"; if someone is waiting, you will join their lobby.</p>-->
+	<table>
+		<tr>
+			<th>Play game</th>
+			<td>
+				<select id=quickmatch_select onchange='get_waiting_users();' autocomplete=off >
+					<option value=0 selected>Choose game</option>
+					{% for game in quickmatch_games %}
+							<option value='{{ game.id }}'>{{ game.name }}</option>
+					{% endfor %}
+				<!--
+					<option value=0 selected>Choose game</option>
+					<option value=20>Casino</option>
+					<option value=21>Palace</option>
+					<option value=30>Simple poker</option>
+					<option value=32>31</option>
+				-->
+				</select>
+			</td>
+			<td><button id=play class=button onclick=''>Play</button></td>
+			<td id='waiting_info' class='note'></td>
+		</tr>
+	</table>
+</fieldset>
+
+<br />
+
+<fieldset>
+	<legend>Chat</legend>
+	<table>
+		<tr>
+			<td class=note colspan=1>Chat</td>
+			<td class=note>Players in chat</td>
+		</tr>
+		<tr>
+			<td colspan=1><div id=chat></div></td>
+			<td><div id=users_online></div></td> 
+		</tr>
+		<tr>
+			<td><b>Chat message</b> <span class='note'>Press Enter to send message</span></td>
+		<tr>
+		<tr>
+			<td colspan=2><input style='width: 300px;' type=text id=message maxlength=200 />
+			<input class='button' type=button name=send value='Send' id='send_button' onclick='var msg = $("#message").val(); if (msg != "") { say(msg); $("#message").val(""); }' /></td>
+		</tr>
+	</table>
+</fieldset>
+<script>
+
+	// When we get message from global chat
+	function onmessage(msg) {
+		log(msg);
+		var command = JSON.parse(msg.data);
+		var command_type = command.command_type;
+
+		switch (typeof command_type == "string" ? command_type : command_type[0]) {
+			case "Chat":
+				chat(command_type[1], command.username);
+				break;
+			case "Users_online":
+				var div = document.getElementById('users_online');
+				div.innerHTML = '';
+				for (var name in command_type[1]) {
+					var span = document.createElement('span');
+					var name_span = document.createElement('span');
+					name_span.innerHTML = name + "<br />";
+					span.appendChild(name_span);
+					div.appendChild(span);
+				}
+				break;
+			default:
+				chat("Error: Command not supported: {0}".format(command_type[0]));
+				break;
+		}
+	}
+
+	// Close socket if user leaves page
+	$(window).bind('beforeunload', function () {
+		ws.close();
+	});
+
+	$(document).ready( function () {
+		// Connect to global chat
+		chat("Connecting to server, please wait...");
+
+		var button = document.getElementById('send_button');
+
+		// Check if port is open
+		ws = new WebSocket("ws://{{addr}}:" + 8079);
+		ws.onopen = function () {
+			chat("Connected");
+
+			// First login
+			var command = {
+				command_type: [
+					'Login', 
+					getCookie("username"), 
+					parseInt(getCookie("session_id")), 
+					""	// No password
+				],
+				username: getCookie("username")
+			};
+			ws.send(JSON.stringify(command));
+
+			ws.onmessage = onmessage;
+
+			ws.onclose = function () {
+				chat("Connection closed");
+			};
+
+			button.onclick = function () {
+				var msg = $("#message").val(); 
+				if (msg != "") { say(msg); $("#message").val(""); }
+			}
+		};
+		ws.onerror = function(msg) {
+			// Nope, no port found, open a new chat
+			chat("Starting new chat server");
+			var ajax = $.ajax({
+				type: "GET",
+				url: "/cgi-bin/drakskatten_ajax?op=new_global_chat&module=startpage", 
+				success: function (){
+					// Second try
+					ws = new WebSocket("ws://{{addr}}:" + 8079);
+					ws.onclose = function () {
+						chat("Connection closed");
+					};
+					ws.onopen = function () {
+						// First login
+						var command = {
+							command_type: [
+								'Login', 
+								getCookie("username"), 
+								parseInt(getCookie("session_id")), 
+								""	// No password
+							],
+							username: getCookie("username")
+						};
+						ws.send(JSON.stringify(command));
+						chat("Connected");
+					};
+					ws.onerror = function () {
+						chat("Error: Could not connect to chat");
+					};
+					ws.onmessage = onmessage;
+					button.onclick = function () {
+						var msg = $("#message").val(); 
+						if (msg != "") { say(msg); $("#message").val(""); }
+					}
+				},
+				error: function (data, textStatus) {
+					chat("Error: Could not start chat");
+				}
+			});
+		};
+	});
+</script>
+
+<script>
+	// Make sure to load quickmatch select when user backs to startpage
+	window.onload = function () {
+		get_waiting_users();
+
+		// Commercial break
+		{{ ad.uri }}
+
+		var iframe = document.createElement('iframe');
+		iframe.src = uri;
+		iframe.style.width = "728px";
+		iframe.style.height = "90px";
+		iframe.style.frameborder = 0;
+		iframe.style.border = 0;
+		iframe.style.marginWidth = 0
+		iframe.style.marginHeight = 0
+		iframe.scrolling = "no";
+		$('#commercial').append(iframe);
+
+	}
+</script>
+<br />
+<div id=commercial>
+</div>

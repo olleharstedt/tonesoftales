@@ -1,0 +1,121 @@
+Mark slot/markera slot
+
+Speciell modus där man kan markera slots? Eller markera alltid om man trycker bredvid menyn? Bildas en gul ram runt. Om man trycker igen försvinner den. Alla markerade rutor samlas i nästa action som utförs, t.ex. play card.
+
+Vill bara att vissa ska kunna markeras, beroende på game state.
+
+Lista på de rutor som är markerade?
+var marks = []
+Finns bara på klientsidan.
+
+var marks = 
+
+Allt ska kunna markeras:
+* Motståndarens deck och slots
+* Egna slots, både i handen och bordet
+* Slots på bordet, table_slots
+
+Olika modus? T.ex. markera max 1, 2, ...
+Stänga av, sätta på.
+enable_marking(), disable_marking()
+
+Bara kunna markera tomma slots, eller slots som har något?
+mark_only_empty(), mark_only_full()/mark_only_content()
+
+När vill man att markeringarna ska försvinna? Efter action? Eller ska servern svara med ett mess om att ta bort markeringar?
+Ska det bara vara möjligt att göra markeringar under sin tur?
+
+Ny action? enable_marking
+
+action = {
+	__type = "action",
+	action_id = 1,
+	action_name = "enable_marking",
+	...
+}
+
+Nej, actions är sånt spelaren kan göra. Men en ny funktion.
+
+disable_marking()
+enable_marking(slot_list)
+* player_slots
+* player hand
+* table slots
+slot_list = {
+	__type = "slot_list",
+	{
+		slot_type 	= "player_slot", 
+		players 	= {player1}, 
+		slot_nrs 	= {1}
+	},
+	{
+		slot_type 	= "table_slot", 
+		slot_nrs 	= {1, 2, 3}
+	},
+	{
+		slot_type 	= "player_hand", 
+		players 	= {player1}
+		-- hand nr?
+	}
+}
+En slot_list för varje spelare. Kör allt enable_marking(slot_list) vid innan end_turn()?
+
+State i Lua för att se vilka slots som är markerade?
+player1.marked_slots = {
+	{
+		slot_type 	= "player_slot",
+		player 	= player1,
+		slot_nr 	= 1
+	}
+}
+
+table_slots.marked_slots?
+
+Vill man se vilka kort som är markerade, eller vilka slots?
+
+marked_cards?
+for s in ipairs(player1.slots) do
+	if s.marked then
+		bla
+	end
+end
+
+player1.hand[1].marked
+player1.hand.marked (för opponent_hand)
+table_slots[1].marked			-- Kan vara overlay, stack, deck, card, tom slot
+player1.slots[1].marked		-- Kan vara overlay, stack, deck, card, tom slot
+
+Eller fält på kortet? card.marked = true | false
+deck1.marked
+
+Om slots[i] är tomt vid markering skapas en ny tabell: slots[i] = {marked = true}
+
+Efter ens tur nollställs alla markeringar. Kan man vilja behålla markeringar över många turer?
+
+API description:
+slot list
+List of specific slot objects, used as argument to <code>enable_marking</code>. There are three kind of slot objects:<ul><li>player_hand</li><li>player_slot</li><li>table_slot</li><ul>Each type has its of fields, as follows below.
+
+<pre>local slot_list = {
+  __type = "slot_list"
+}
+
+table.insert(slot_list, {
+	slot_type = "player_hand",
+	players = players
+})
+
+table.insert(slot_list, {
+	slot_type = "player_slot",
+	players = {player1},
+	slot_nrs = {1, 2, 3, 4, 5, 6}
+})
+
+table.insert(slot_list, {
+	slot_type = "table_slot",
+	slot_nrs = {1, 2, 4, 6}
+})
+
+enable_marking(slot_list)</pre>
+
+After this command is executed, the player whos turn it is will be able to mark all cards in his hand and all opponents hands; slot 1-6 of player1's slots; and slots 1, 2, 4 and 6 of the table slots.

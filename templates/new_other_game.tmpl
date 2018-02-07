@@ -1,0 +1,29 @@
+
+
+
+<fieldset>
+	<legend>Start new game session from game {{game_name}}</legend>
+	<form method=post action=drakskatten>
+		<input type=hidden name=op value=create_lobby />
+		<input type=hidden name=module value=gamesession />
+		<input type=hidden name=game_id value={{game_id}} />
+		<input type=hidden name=own_game value=0 />
+		<input type=hidden name=debug value=off /><br />
+		<table>
+			<tr>
+				<th>Public</th>
+				<td><select name=public><option value=1 selected>Yes</option><option value=0>No</option></select></td>
+				<td class='note'>Yes = other players can search for this session and join</td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td><input style='width: 150px;' type=text name=password maxlength=30 /></td>
+				<td class='note'>Leave blank for no password</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input class='button' type=submit value='Create game session' /></td>
+			</tr>
+		</table>
+	</form>
+</fieldset>

@@ -1,0 +1,24 @@
+<fieldset>
+	<legend>Add card</legend>
+	<form method=post action=drakskatten enctype='multipart/form-data'>
+		<input type=hidden name=op value=add_card />
+		<input type=hidden name=module value=card />
+		<table>
+			<tr>
+				<th>Title</th><td><input type=text name=title maxlength=100></td><td class='note'>Must be unique for each card you own.</td>
+			</tr>
+			<tr>
+				<th valign=top>Text</th><td colspan=4><textarea name=text cols=50 rows=8 ></textarea></td>
+			</tr>
+			<tr>
+				<th>Image</th><td colspan=4><input type=file name=img id=img /></td>
+			</tr>
+			<tr>
+				<th>Sound</th><td colspan=4><input type=file name=sound id=sound /></td>
+			</tr>
+			<tr>
+				<td></td><td><input class='button' type=submit value='Create new card' /></td>
+			</tr>
+		</table>
+	</form>
+</fieldset>

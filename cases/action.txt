@@ -1,0 +1,17 @@
+Add action to deck, hand, slot, etc.
+
+Två typer av actions: pick_card och play_card:
+* pick_card kallar på __pick_card i Lua.
+* play_card kallar på __play_card
+
+2013-10-09
+
+action = {
+	action_id = 1,
+	action_name = "callback",
+	menu_text = "Bla",
+	target = "table_slot",
+	target_ids = {2}
+	players = {players},
+	callback = function(player, slot) end
+}

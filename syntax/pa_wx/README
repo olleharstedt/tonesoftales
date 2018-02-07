@@ -1,0 +1,8 @@
+# Useage
+ocamlfind ocamlc -syntax camlp4o -package pa_wx.syntax test.ml
+
+# Install ocamlfind package
+sudo ocamlfind install pa_wx META pa_wx.cmi pa_wx.cmo -destdir /home/olle/.opam/4.00.1/lib/
+
+# Compilation
+ocamlc -pp "camlp4o pa_extend.cmo q_MLast.cmo" -I camlp4-lib-dir -I +camlp4 -c pa_wx.ml

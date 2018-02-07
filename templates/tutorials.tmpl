@@ -1,0 +1,177 @@
+<!-- Tutorials -->
+
+<script>
+$
+(function() {
+	var pre = document.getElementsByTagName('pre'),
+	pl = pre.length;
+	for (var i = 0; i < pl; i++) {
+		pre[i].innerHTML = '<span class="line-number"></span>' + pre[i].innerHTML + '<span class="cl"></span>';
+		var num = pre[i].innerHTML.split(/\n/).length;
+		for (var j = 0; j < num; j++) {
+			var line_num = pre[i].getElementsByTagName('span')[0];
+			line_num.innerHTML += '<span>' + (j + 1) + '</span>';
+		}
+	}
+ })();
+</script>
+
+<h2>Tutorials</h2>
+
+<p style='width: 600px;'>A couple of tutorials to get you started. Further information about functions and data-structures can be found on the <a href='/cgi-bin/drakskatten?op=doc_api&module=startpage'>API page</a>.</p>
+
+<div class='tutorial'>
+	<h3>Tutorial 1: Markus</h3>
+
+	<p>The first tutorial is about making a vary basic card game called "Markus": Each turn the player draws a card. If the card is Jack of spades, the player is Markus. That means he has lost. I think.</p>
+
+	<p>The first thing you need to know about is <i>actions</i>. Actions control what the player can do. In the current version of Tones of Tales, adding an action to a game means there will be a menu, either on a card or a deck (or stack, or overlay, but more about that later). The specific action we need is "pick_card". There is also "play_card", as we will see in tutorial 2.</p>
+
+	<p>Actions are added to the game with command <code>add_action</code>. They can be removed with <code>remove_action</code>.</p>
+
+	<p>Some other common commands is <code>shuffle</code>, <code>set_values</code>, <code>game_over</code> and <code>end_turn</code>.</P>
+
+	<p>The full code listing of the game is below. Also feel free to check out the video.</p>
+
+	<b>init_script:</b>
+	<pre>
+action1 = {
+	action_id = <span class='lua-number'>1</span>,
+	action_name = <span class='lua-string'>"pick_card"</span>
+	players = players,	<span class='lua-comment'>-- Global variable "players" includes all players</span>
+	target = <span class='lua-string'>"deck"</span>,
+	target_ids = {<span class='lua-number'>1</span>},	<span class='lua-comment'>-- Deck with id 1</span>
+	menu_text = <span class='lua-string'>"Pick card"</span>
+}
+
+<span class='lua-keyword'>function</span> init()
+	shuffle(deck1)		<span class='lua-comment'>-- Shuffle deck 1</span>
+	set_values(deck1)	<span class='lua-comment'>-- Set values and suits to cards in standard deck</span>
+
+	<span class='lua-builtin'>table.insert</span>(table_slots, deck1)	<span class='lua-comment'>-- Place deck at first table_slot</span>
+	update_table()				<span class='lua-comment'>-- Show changes</span>
+
+	add_action(action1)	<span class='lua-comment'>-- Add "pick_card" action</span>
+<span class='lua-keyword'>end</span></pre>
+
+<b>onpickup_all:</b>
+<pre><span class='lua-keyword'>function</span> onpickup_all(player, deck)
+	<span class='lua-keyword'>local</span> card = <span class='lua-builtin'>table.remove</span>(deck.cards, 1)	<span class='lua-comment'></span>
+	card.facing = <span class='lua-string'>"up"</span>		<span class='lua-comment'>-- Change facing to "up"</span>
+	player.slots[<span class='lua-number'>1</span>] = card		<span class='lua-comment'>-- Place card on players first slot</span>
+	update_player_slots(player)	<span class='lua-comment'>-- Show changes</span>
+
+	<span class='lua-keyword'>if</span> (card.value == <span class='lua-number'>11</span> <span class='lua-keyword'>and</span> card.suit == <span class='lua-string'>"spades"</span>) <span class='lua-keyword'>then</span>
+		chat(player.name .. <span class='lua-string'>" is Markus!"</span>)		<span class='lua-comment'>-- Chat message</span>
+		game_over()					<span class='lua-comment'>-- End the game</span>
+	<span class='lua-keyword'>end</span>
+
+	end_turn()
+<span class='lua-keyword'>end</span>
+	</pre>
+
+	<h4 style='color: #aaa;'>Video of tutorial 1</h4>
+	<iframe width="640" height="360" src="//www.youtube.com/embed/PO0u8sArOA0?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<div class='tutorial'>
+	<h3>Tutorial 2: Casino</h3>
+
+	<p>In this tutorial I will demonstrate the new action "play_card" in a prototype version of Casino. Casino is a fairly simple game where you pick up cards laying on the table with cards on your hand. E.g., if you play a king, you will pick up kings on the table and cards summing up to 13 (8 and 5, 7 and 6, etc). You then calculate points depending how many cards you picked up, how many aces, spades, and so on.</p>
+
+	<p>Let's begin with the <i>init_script</i> Lua chunk.</p>
+
+	<p>First thing to do is the action definition. The target of "play_card" will in our case be "hand", since the player will play cards from his/hers hand (it's also possible to play cards from your player slots).</p>
+
+<pre>action1 = {
+	action_id = 1,
+	action_name = <span class='lua-string'>"play_card"</span>,
+	target = <span class='lua-string'>"hand"</span>,
+	target_ids = {<span class='lua-number'>1</span>},
+	menu_text = <span class='lua-string'>"Play card"</span>,
+	players = players
+}</pre>
+
+	<p>We add the action to the game with function <code>add_action</code>, as seen in the last tutorial.</p>
+
+	<p>As in the last tutorial, we shuffle and set values for the deck, then place it on the table.</p>
+
+	<pre>shuffle(deck1)
+set_values(deck1)
+
+table_slots[<span class='lua-number'>1</span>] = deck1
+update_table()</pre>
+
+	<p>Next thing we want to do is deal cards. Each player will have four cards on their hand at start, and also there will be four cards on the table. We create a small help function to draw a card from the deck:</p>
+	<pre><span class='lua-keyword'>function</span> draw_card()
+	<span class='lua-keyword'>return</span> <span class='lua-builtin'>table.remove</span>(deck1.cards, <span class='lua-number'>1</span>)
+<span class='lua-keyword'>end</span></pre>
+
+	<p>We make a <code>deal</code> function where we iterate four times, each time draw a card and adding it to a players hand.</p>
+
+	<pre><span class='lua-keyword'>function</span> deal(p)
+	<span class='lua-keyword'>for</span> i = <span class='lua-number'>1</span>, <span class='lua-number'>4</span> <span class='lua-keyword'>do</span>
+		<span class='lua-builtin'>table.insert</span>(p.hand, draw_card())
+	<span class='lua-keyword'>end</span>
+
+	update_hand(p)
+end</pre>
+
+	<p>Then, in our <code>init</code> function we simply iterate for all players online and deal for them.</p>
+
+	<pre><span class='lua-keyword'>for</span> _, p <span class='lua-keyword'>in</span> <span class='lua-builtin'>ipairs</span>(players) <span class='lua-keyword'>do</span>
+	deal(p)
+<span class='lua-keyword'>end</span></pre>
+
+	<p>In Casino there will lay four cards on the table at start. We iterate again four times, and don't forget to change the card facing to "up" (default is "down") so value and suit will be shown.</p>
+
+	<pre><span class='lua-keyword'>for</span> i = <span class='lua-number'>1</span>, <span class='lua-number'>4</span> <span class='lua-keyword'>do</span>
+	<span class='lua-keyword'>local</span> card = draw_card()
+	card.facing = <span class='lua-string'>"up"</span>
+	<span class='lua-builtin'>table.insert</span>(table_slots, card)
+<span class='lua-keyword'>end</span></pre>
+
+	<p>That's it for initialization. Let's move on to the <i>onplay_all</i> chunk.</p>
+
+	<p>I want to show a small "animation", rotating the card 45 degrees when it's played on the table. This is done using the <code>position</code> field of the card, like below.</p>
+
+	<pre>remove_card_from_hand(player, card)
+card.facing = <span class='lua-string'>"up"</span>
+card.position.rotate = <span class='lua-number'>45</span>
+<span class='lua-builtin'>table.insert</span>(table_slots, card)
+update_table()
+sleep()
+card.position.rotate = <span class='lua-number'>0</span></pre>
+
+	<p>Since this just a prototype, I will make a very simple algorithm for picking up cards from table: you pick up all cards that equals to the value of the card you played. To iterate through all the cards on the table, we first need to remove the card we just laid there.</p>
+
+	<pre><span class='lua-builtin'>table.remove</span>(table_slots, #table_slots)</pre>
+
+	<p>Since we might want to put this card on table again (if we didn't pick up any cards), we create a boolean to check later.</p>
+
+	<pre><span class='lua-keyword'>local</span> picked_card = <span class='lua-keyword'>false</span></pre>
+
+	<p>Almost done! We loop through <code>table_slots</code> and pick up a card <i>if</i> the table slot contains a card and the value is equal to the one we played. After, we update the table, the players hand and end our turn.</p>
+
+	<pre><span class='lua-keyword'>for</span> k, c <span class='lua-keyword'>in</span> <span class='lua-builtin'>ipairs</span>(table_slots) do
+	<span class='lua-keyword'>if</span> (c.__type == "card" <span class='lua-keyword'>and</span> c.value == card.value) <span class='lua-keyword'>then</span>
+		<span class='lua-builtin'>table.remove</span>(table_slots, k)
+		picked_card = <span class='lua-keyword'>true</span>
+		<span class='lua-keyword'>break</span>;
+	<span class='lua-keyword'>end</span> 
+<span class='lua-keyword'>end</span>
+
+<span class='lua-keyword'>if</span> <span class='lua-keyword'>not</span> picked_card <span class='lua-keyword'>then</span>
+	<span class='lua-builtin'>table.insert</span>(table_slots, card)
+<span class='lua-keyword'>end</span>
+
+update_table()
+update_hand(player)
+
+end_turn()</pre>
+
+	<h4 style='color: #aaa;'>Video of tutorial 2</h4>
+
+	<iframe width="640" height="480" src="//www.youtube.com/embed/P4fLGExoBgU?rel=0" frameborder="0" allowfullscreen></iframe>
+
+</div>

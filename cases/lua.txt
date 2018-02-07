@@ -1,0 +1,4 @@
+LUA-modulen, med stacksimulerande fantomtyper.
+Started: 2013-05-01?
+
+Använda monadsyntax?

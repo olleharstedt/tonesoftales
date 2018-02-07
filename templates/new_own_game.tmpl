@@ -1,0 +1,40 @@
+
+<fieldset class='fset'>
+	<legend>Start new game session from own game</legend>
+	<form method=post action=drakskatten>
+		<input type=hidden name=op value=create_lobby />
+		<input type=hidden name=module value=gamesession />
+		<input type=hidden name=own_game value=1 />
+		<table>
+			<tr>
+				<th>Game</th>
+				<td>
+					<select name=game_id>
+						{% for g in games %}
+							<option value={{g.id}}>{{g.name}}</option>
+						{% endfor %}
+					</select><br />
+				</td>
+			</tr>
+			<tr>
+				<th>Public</th>
+				<td><select name=public><option value=1 selected>Yes</option><option value=0>No</option></select></td>
+				<td class='note'>Choose yes if you want other users to be able to search for this session. No is good for personal testing.</td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td><input type=text name=password maxlength=50 /></td>
+				<td class='note'>Leave blank for no password.</td>
+			</tr>
+			<tr>
+				<th>Debug tools</th>
+				<td><input type=checkbox name=debug /></td>
+				<td class='note'>Enabling debug tools make it possible for you to print out objects from your Lua state, and execute Lua code while running the game.</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input class='button' type=submit value='Create session' /></td>
+			</tr>
+		</table>
+	</form>
+</fieldset>

@@ -1,0 +1,67 @@
+2013-10-10
+
+Finansiering, men hur?
+
+För 5€, behöver 10 nya kunder om dagen?
+5 * 10 = 50€ = 437 kr netto, kanske 215 netto.
+215 * 30 = 6450, för lite på en månad. 3000 kvar efter hyra.
+
+Måste bli lika populär som games.com eller playok.com? Alltid minst 100 medlemmar online?
+
+Behöver 60'000 kr brutto för att kunna utveckla ett halvår. Men beräknad etableringstid är ändå > 1 år?
+
+När kan jag få en första betalande kund? När jag redan har 100 medlemmar som är där gratis? Eller 200? Gå från shareware till betala. Hur många kommer då lämna hemsidan?
+
+Vill kanske anställa någon som gör spelen, medan jag gör plattformen.
+Exjobb i statisk kodanalys av Lua? Linjära typer i Lua-modulen?
+
+****** Mail från Almi: ******
+
+Hej Olle Härstedt
+Jag har läst genom din Idébeskrivning och underlag för affärsidé och har en del kommentarer:
+-Beträffande din affärsidé så verkar det vara två olika affärsidéer som är ganska åtskilda kundgruppsmässigt kombinerade till en hemsida, dels sådana som vill spela enkla spel mot varandra och sen dem som tycker om att programmera och skapa egna spel. Personligen tror jag att det är ganska vitt skilda grupper och för att programmera spel tror jag det krävs ganska avancerade "kunder" och de är nog i ett fåtal, medan däremot "spelare" kan det finnas jättemånga.
+-När det gäller "spelare" så finns ju redan idag på nätet massor av spelsiter, se exempel på referenserna nedan så där är konkurrensen stenhård.
+-När det gäller redskap för att skapa kort- och brädspel så måste höga krav på enkelhet och pedagogiskt uppbyggda instruktioner finnas (de flesta spelutvecklare tar väl fram sina spel på eget sätt från "scratch")
+-Beträffande möjligheten att erhålla förstudiemedel (innovationsbidrag) från Almi så krävs att en produkt, idé eller tjänst är helt unik och innovativ och något liknande får inte tidigare finnas på jorden. Du verkar ju kombinera två kända tjänster/produkter, online spel och spelutveckling och det tycker inte jag är tillräckligt unikt och innovativt för att uppfylla kraven för våra förstudiemedel. Däremot kan det vara en mycket bra kommersiell affärsidé (normal "produktframtagning" men inte innovation i vår betydelse)
+-Kommentarer rörande din finansieringskalkyl och resultatkalkyl: I finansieringskalkylen har du inte tagit med utvecklingskostnader (programmering mm), eller tänker du göra detta själv? Vad är det i så fall annars du söker finansiering för och hur mycket? Det är ju inga stora månadsintäkter du kalkylerar med första året , men ändå plus (förutom din egen lön antar jag?). Om man söker riskkapitalister/affärsänglar eller andra finansiärer så tror jag de kalkylerar med större siffror och vinster, nu kommer nettolönen bara att knappt täck din egen lön andra halvåret. Om man söker bidrag eller liknande (exvis Almi förstudiemedel alternativt lån) så får man aldrig söka för sin egen lön (utan oftast bara för externa kostnader), det är endast Arbetsförmedlingen som har starta eget bidrag för egen försörjning.
+Du får gärna kommentera mig och du är välkommen till Almi (mig eller mina kollegor, beroende på vilka frågeställningar du vill diskutera) för ev rådgivning, men i nuläget beträffande ev finansiering så tror jag att förstudiemedel inte är berättigat här och för ev lån krävs att man kommit lite längre så man ser att kunder finns och att intäkter är att förväntas så att återbetalningsförmåga kan erhållas.
+
+REFERENSER:
+
+http://www.spela.se/spel/kort/kort.html (som du själv också angav)
+
+http://www.123bradspel.se/
+
+http://www.roligaspelonline.nu/category/kortspel-pokerspel/
+
+http://www.123kortspel.se/
+
+http://www.king.com/spel/kortspel/?language=sv
+
+http://www.123patiens.se/kortspel/uno.php
+
+http://www.zigiz.com/sv-SE/kortspel.html
+
+http://www.megaspel.se/spel/kort
+
+http://www.games.com/card-games
+
+https://www.google.se/#q=kortspel+p%C3%A5+internet&start=20
+
+https://www.google.se/#q=card+games+online
+
+http://toppen.nu/kortspel-på-nätet.html
+
+Med vänliga hälsningar
+
+Olle Jonsson
+Innovationsrådgivare
+
+Almi Företagspartner Uppsala AB
+Dragarbrunnsgatan 35, 753 20 Uppsala
+
+Tel dir: 018-18 52 05
+Tel vxl: 018.18 52 00
+SMS: 070-628 87 31
+Fax: 018-18 52 10
+www.almi.se/uppsala

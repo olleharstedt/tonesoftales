@@ -1,0 +1,125 @@
+
+<img src='/img/card_back.jpg' style='display: none;' /> 
+<img src='/img/card_back.png' style='display: none;' /> 
+<img src='/img/deck_back.jpg' style='display: none;' /> 
+<img src='/img/hand.jpg' style='display: none;' /> 
+<img src='/img/table.jpg' style='display: none;' /> 
+{# Preload all imgs #}
+{% for i in imgs %}
+	<img id="preload_{{i.dir}}_{{i.img}}" src="/drakskatten/upload/{{i.dir}}/{{i.img}}" style='display: none'/>
+{% endfor %}
+{# Preload dice #}
+<img id='preload_dice1' src="/img/dice1c.jpg" style='display: none;' />
+<img id='preload_dice2' src="/img/dice2c.jpg" style='display: none;' />
+<img id='preload_dice3' src="/img/dice3c.jpg" style='display: none;' />
+<img id='preload_dice4' src="/img/dice4c.jpg" style='display: none;' />
+<img id='preload_dice5' src="/img/dice5c.jpg" style='display: none;' />
+<img id='preload_dice6' src="/img/dice6c.jpg" style='display: none;' />
+
+<div style='float: left;'>
+	<fieldset id=lobby>
+		<legend>Lobby for game {{game_name}}</legend>
+		<table>
+			<!--
+			<tr>
+				<th style='text-align: left;'>Chat</th>
+			</tr>
+			-->
+			<tr>
+				<td colspan=4><div id=chat></div></td>
+			</tr>
+			<tr>
+				<th>Chat message</th>
+				<td class='note'>Press Enter to send message</td>
+			<tr>
+				<td colspan=2><input style='width: 300px;' type=text id=message maxlength=200 /></td>
+				<td><input class='button' type=button name=send value='Send' onclick='var msg = $("#message").val(); if (msg != "") { say(msg); $("#message").val(""); }' /></td>
+			</tr>
+			<tr>
+				<th style='width: 150px;'>Max players</th>
+				<td>{{max_players}}</td>
+			</tr>
+			<tr>
+				<th>Min players</th>
+				<td>{{min_players}}</td>
+			</tr>
+			<tr>
+				<th>Users online</th>
+				<td colspan=4><span id=users_online style='background-color: inherit;' cols=8 rows=8 readonly></span></td>
+			</tr>
+			<tr>
+				<td><input class='button' type=button value='Close' onclick='ws.close(); //window.history.go(-1);' /></td>
+				<td class='note'>This will close the websocket. You cannot reenter the session once offline.</td>
+			</tr>
+			<tr>
+			</tr>
+			{% if creator %}
+			<tr>
+				<td><input class='button' type=button name=start id=start value='Start game' onclick='start_game();' autocomplete=off /></td>
+				<td class='note'>Start the game. Users cannot enter the session once the game is started.</td>
+			</tr>
+			<!--
+			<tr>
+				<td><input class='button' type=button name=play_again id=play_again value='Play again' onclick='play_again();'/></td>
+				<td class='note'>Restart game after game over.</td>
+			</tr>
+			-->
+			{% endif %}
+		</table>
+	</fieldset>
+	<fieldset id=points_area style='display: none;'>
+		<legend>Points</legend>
+		<table id=points_table>
+		</table>
+	</fieldset>
+</div>
+
+<fieldset id=game_area style='display: none;'>
+	<legend>Game area</legend>
+	<div id=others></div>
+	<div id=table></div>
+	<div id=me></div>
+</fieldset>
+
+{# Debug tools #}
+{% if debug %}
+	<fieldset id=debug_tools>
+		<legend>Debugging tools</legend>
+		<textarea id=debug_text cols=100 rows=20 readonly></textarea><br />
+		<input type=button value='Dump decks' onclick='dump_decks();' />
+		<input type=button value='Dump players' onclick='dump_players();' />
+		<input type=button value='Dump table' onclick='dump_table();' />
+		<input type=button value='Run Lua' onclick='execute_lua();' />
+	</fieldset>
+{% endif %}
+
+{# Specialized script for creator/joiner #}
+{% if creator %}
+<script>
+
+	// Connect websocket
+	$(document).ready( function () {
+		chat("Connecting to server, please wait...");
+		open_new_lobby("{{addr}}", {{port}}, {{session_id}}, {{use_password}})
+		document.getElementById('start').display = false;	// Silly Firefox bug
+	});
+
+	// Close socket if user leaves page
+	$(window).bind('beforeunload', function () {
+		ws.close();
+	});
+</script>
+{% else %}
+	<script>
+
+		// Connect websocket
+		$(document).ready( function () {
+			new_websocket("{{addr}}", {{port}}, {{use_password}}); 
+		});
+
+		// Close socket if user leaves page
+		$(window).bind('beforeunload', function () {
+			ws.close();
+		});
+	</script>
+{% endif %}

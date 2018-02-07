@@ -1,0 +1,11 @@
+2013-12-01
+
+Canvas
+Använda canvas istället för div och table.
+Måste deaktivera draggable, onclick, mark, hela alltet, eftersom det inte är anpassat till canvas. Misstag?
+
+enable_canvas() -- Doesn't work with draggable, marking, etc
+disable_canvas()
+
+Smooth transition?
+Göra mjuka övergångar? Kurvor? Animate? Arc.

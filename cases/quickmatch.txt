@@ -1,0 +1,9 @@
+Quickmatch
+2013-09-28
+
+Funktion på startsidan. Ser vilka som är online, vilka som väntar på spel, etc.
+
+Statistik:
+* Användare online
+* Hur många spelsessioner igång
+* Hur många som väntar

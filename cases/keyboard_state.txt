@@ -1,0 +1,20 @@
+2013-12-06
+
+Istället för att skicka msg när knapp trycks ner, skicka "keystate" för varje spelare när knappläget ändras, dvs. när något trycks eller släpps.
+
+player1.keyboard_state.a = "up"|"down"
+
+lua:
+enable_keyboard_state({68, 69, 70}) -- List of character codes
+
+ocaml:
+type key_state = Up | Down
+type key_state_tuple = 
+	char_code * string
+type keyboard_state =
+	key_state_tuple list
+let enabled_keyboard_state = ref ([] : char_code list)	// Keystate enabled for these keys
+	
+javscript:
+keyboard_state_enabled = true|false
+keyboard_state = {} // {69: "Up"|"Down", char_code: state_string}

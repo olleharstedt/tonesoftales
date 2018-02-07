@@ -1,0 +1,10 @@
+name = "pa_wx"
+version = "0.0.1"
+description = "Small module syntax, l->length"
+package "syntax" (
+  name = "pa_wx.syntax"
+  requires = "camlp4"
+  description = "Syntax"
+  archive(syntax, preprocessor) = "pa_wx.cmo"
+  archive(syntax, toploop) = "pa_wx.cmo"
+)

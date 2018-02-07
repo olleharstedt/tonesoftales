@@ -1,0 +1,49 @@
+<fieldset>
+	<legend>Add game</legend>
+	<p>Information: A game consist of decks, which consists of cards. Within a game, you can add scripts to cards which will run on certain events, e.g. when a card is being picked up.</p>
+	<p>Remember that a <code>slot</code> can contain a deck, card, stack or overlay. See documenation and tutorials for more information about this.</p>
+	<form method=post action=drakskatten>
+		<input type=hidden name=op value=add_game />
+		<input type=hidden name=module value=game />
+		<table>
+			<tr>
+				<th>Name</th><td><input type=text name=name /></td>
+			</tr>
+			<tr>
+				<th valign=top>Description</th><td colspan=2><textarea name=description cols=50 rows=8 ></textarea></td><!--<td>The description will be shown for other players when they search for games. You might want to include the rules of the game here.</td>-->
+			</tr>
+			<tr>
+				<th>Max players</th><td><input type=text name=max_players /></td><td class='note'>Maximum number of playeres allowed in game.</td>
+			</tr>
+			<tr>
+				<th>Min players</th><td><input type=text name=min_players /></td><td class='note'>Minumum number of players needed to play game.</td>
+			</tr>
+			<!--
+			<tr>
+		<td>Player hands:</td>(how many hands of cards each player will have):<input type=text name=hands /></br />
+			</tr>
+			-->
+			<tr>
+				<th>Player slots</th><td><input type=text name=player_slots /></td><td class='note'>Number of card slots in front of each players, working as the players part of the table.</td>
+			</tr>
+			<!--
+			<tr>
+				Tables (number of tables):<input type=text name=tables /><br />
+			</tr>
+			-->
+			<tr>
+				<th>Table slots</th><td><input type=text name=table_slots /></td><td class='note'>Number of card slots for the table.</td>
+			</tr>
+			<tr>
+				<th>Gadgets</th><td><input type=text name=gadgets /></td><td class='note'>Number of GUI elements for each player (buttons, dialoges, slides etc).</td>
+			</tr>
+			<tr>
+				<th>Public</th><td><select name=public><option value=1>Yes</option><option value=0 selected>No</option></select></td><td class='note'>Other users can start game session with this game.</td>
+			</tr>
+			<tr>
+				<td></td><td><input class='button' type=submit value='Create new game' /></td>
+			</tr>
+		<!-- Initialization script (this script will run when a game session is started; see documenation for examples and more information):<textarea name=init_script cols=50 rows=8></textarea><br /> -->
+		</table>
+	</form>
+</fieldset>

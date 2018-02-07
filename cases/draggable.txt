@@ -1,0 +1,64 @@
+2013-11-05
+
+Draggable, kunna dra ett kort till valfritt slot.
+Även dra kort från stack/overlay.
+
+Synas för båda spelaren när den ena drar?
+
+Bara möjligt under ens tur?
+
+Kortet åker tillbaks om ingen slot är droppable.
+
+Vissa kort bara kunna släppas i vissa slots?
+
+Program: Solitair, Backgammon, Schack
+
+Use case: Användaren drar ett kort till en droppable slot. Programmet svarar med fel och flyttar tillbaks kortet manuellt med move_card.
+
+Use case: Användaren drar ett kort som flyttas med update_table. De andra spelarna ser aldrig kortet flyttas, bara uppdateringen. Ändra move_card för target players? t.ex. move_card_players
+
+Tänk på marking interagerar med draggable (klickas som marked när man släpper musknappen - inte använda tillsammans?).
+
+Bara kunna dra öppna kort? Hur annars veta vilket kort det är?
+
+Bara kunna dra under sin tur? Separera i callback?
+
+enable_droppable(slot_list)
+disable_droppable()
+disable_draggable()
+is_draggable(card)
+is_droppable(slot)
+
+enable_draggable(card_list, ondrop)
+enable_draggable(players, card_list, slot_list/targets, ondrop)
+enable_draggable({player1}, {card1, card2}, {{slot_type = "table_slot", slot_nrs = {1, 2, 3}}}, function(player, card, src, dest)
+	-- src.table[src.index] = nil
+	-- dest.table[dest.index] = card
+	-- update_table()
+	
+	-- slot.slot_type = "table_slot" | "player_slot" | "player_hand"
+	-- slot.slot_nr = 1
+	-- slot.player 
+end)
+
+$("el").draggable({
+	containment: "#table_f",
+	stop: function () {
+		// send info to server?
+	}
+});
+
+$("el").droppable({
+	drop: function (event, ui) {
+		// $(this) = drop slot? ui = dropped card?
+		this.card_nr = ?
+		var command = {
+			command_type: [
+				'Drop', 
+				[card_nr, ]
+			],
+			username: getCookie("username")
+		};
+		ws.send(JSON.stringify(command));
+	}
+});

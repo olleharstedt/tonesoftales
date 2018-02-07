@@ -1,0 +1,20 @@
+2013-11-28
+
+Binda callbacks till tangenter.
+Max EN callback per tangent.
+Ska kunna skriva i chatten, men också binda aesd till andra saker.
+
+$(document).keydown( function(e) {
+	for all callbacks
+		if callback.key == e.which then
+			run callback
+		endif
+	endfor
+	preventdefault? return false?
+});
+
+bind_key(character_code, callback)
+bind_key(65, function(player) end)
+unbind_key(charcode)
+
+Stänga av autorepeat?

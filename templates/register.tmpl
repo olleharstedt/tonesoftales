@@ -1,0 +1,39 @@
+	<fieldset>
+		<legend><b>Register</b></legend>
+		<form method=post action=/register.php>
+			<input type=hidden name=op value=create_user />
+			<input type=hidden name=module value=user />
+			<table style='width: 700px;'>
+				<tr>
+					<td></td>
+					<td colspan=2>This will register a new account on Tones of Tales, which gives you opportunity to play cards and more games with other users, and even make your own games. If you want to check it out before you register, please login as <span class=anchor onclick='guest_login();'>guest</span>.</td>
+				</tr>
+				<tr>
+					<th class='td'>Username</th>
+					<td><input type=text name=username maxlength=100/></td>
+				<tr>
+				<tr>
+					<th class='td'> Password</th>
+					<td><input type=password name=password maxlength=100/></td>
+				</tr>
+				<tr>
+					<th class='td'>Email</th>
+					<td><input type=text name=email maxlength=100/></td>
+				</tr>
+				<tr>
+					<th class='td'>Newsletter</th>
+					<td><input type=checkbox name=newsletter /></td>
+					<td class='note'>Check if you want to receive information about new games and features</td>
+				</tr>
+				<tr>
+					<th class='td'>Robot check</th>
+					<td><input type=text name=robot maxlength=4/></td>
+					<td class='note'>Type the four first letters of your username</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input class='button' type=submit value="Register account"></td>
+				</tr>
+			</table>
+		</form>
+	</fieldset>

@@ -1,0 +1,145 @@
+Gadgets
+
+@since 2013-07-14
+@author Olle
+
+Olika typer av knappar, checkboxes etc.
+
+Funktioner:
+	add_gadget(g)
+	remove_gadget(g)
+	new_gadget() ? Ger unikt id, så man slipper hålla det i huvudet.
+	Gadget:new({options...})
+	gadget:add()
+	gadget:remove()
+
+Select gadget:
+gadget = {
+	gadget_id = 1,
+	type = "select",
+	players = {player1},
+	options = {"One", "Two", "Three"},
+	callback = function (player, value)
+		chat("You changed something to " .. value)
+	end
+}
+
+Input gadget:
+Input med knapp för att skicka infon?
+gadget = {
+	gadget_id = 2,
+	type = "input",
+	player = players,
+	text = "Bet",
+	callback = function (player, data)
+		chat(player.name .. " wrote " .. data)
+	end
+}
+
+Slide gadget:
+Slide med nummer som visas bredvid. Med knapp för att skicka?
+gadget = {
+	gadget_id = 3,
+	type = "slider",
+	player = players,
+	range = {0, 100},
+	step = 5,
+	callback = function	(player, value)
+		chat("slider changed to " .. value)
+	end
+}
+
+Confirm dialog:
+gadget = {
+	gadget_id = 4,
+	type = "confirm",
+	player = players,
+	text = "Really do this?",
+	title = "Confirm",	-- Optional field; defaults to "Confirm"
+	callback = function(player, answer)
+		chat(player.name .. "answered " .. answer)
+	end
+}
+
+
+<p>A gadget is a GUI element that is added below the cards of the player. The user can only se his/hers own gadgets. Gadgets are used with a callback function to execute code.</p>
+<p>The following gadgets are supported:</p>
+<ul>
+	<li>Button</li>
+	<li>Input field</li>
+	<li>Select list</li>
+	<li>Slider</li>
+	<li>Confirm dialog</li>
+</ul>
+<p>All gadgets run a callback function when activated.</p>
+<p>Examples:</p>
+<pre>-- A simple button with text "Push".
+gadget = {
+	gadget_id = 1,
+	type = "button",
+	text = "Push",
+	players = {player1}
+	callback = function(player) 
+		chat(player.name .. " pressed a button")
+	end
+}
+
+-- A select list with three options. Value will change to 1 for "One", 2 for "Two" etc.
+gadget = {
+	gadget_id = 1,
+	type = "select",
+	players = {player1},
+	options = {"One", "Two", "Three"},
+	callback = function (player, value)
+		chat("You changed list to " .. value)
+	end
+}
+
+-- Input gadget with button next to it. "data" in the callback function is a string.
+gadget = {
+	gadget_id = 2,
+	type = "input",
+	player = players,
+	text = "Bet",
+	callback = function (player, data)
+		chat(player.name .. " wrote " .. data)
+	end
+}
+
+-- A slider element from range 0 to 100 with step 5.
+gadget = {
+	gadget_id = 3,
+	type = "slider",
+	player = players,
+	range = {0, 100},
+	step = 5,		-- Optional field; defaults to 1
+	callback = function	(player, value)
+		chat("slider changed to " .. value)
+	end
+}
+
+-- A confirm dialog pop-up that blocks user input until "OK" or "Cancel" is pressed.
+-- "answer" in callback function is a boolean value.
+gadget = {
+	gadget_id = 4,
+	type = "confirm",
+	player = players,
+	text = "Really do this?",
+	title = "A title",	-- Optional field; defaults to "Confirm"
+	callback = function(player, answer)
+		chat(player.name .. " answered " .. tostring(answer))
+	end
+}</pre>
+<p>Use functions <code>add_gadget</code> and <code>remove_gadget</code> to add and remove gadgets from the player area.</p>
+
+Typer:
+	button, button with icons?
+	checkbox/toggle
+	radio
+	dialog, dialog form, confirmation, alert, message
+	menu
+	tabs, med text?
+
+toolbar under hand? där man kan ha egna inställningar.
+
+Vilka gadgets är synliga? Vissa bara för en själv, eller alla bara för en själv? Se motståndarens gadgets?

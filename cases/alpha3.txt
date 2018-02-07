@@ -1,0 +1,23 @@
+Version: Alpha 3
+Påbörjad: 2013-07-16
+Avslutad: 2013-10-20
+
+(Sjukskriving under Augusti)
+
+Cases:
+	x Mark slots
+	- Points table
+	- Dice
+	- PayPal! viktigt, eller?
+	- email confirmation för skapa nytt konto
+	x quick match
+	x gadget button
+	x anim
+	x Guest account
+	x Play again
+
+New games:
+	x 31
+	x simple poker
+	- poker? using mark
+	- yatzy (using mark, points, dice)

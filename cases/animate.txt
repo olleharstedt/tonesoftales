@@ -1,0 +1,204 @@
+2013-10-10
+
+Animera kort: Vrida, vända, glida till ett annat kort.
+Pedagogiskt, så man ser om någon plockar upp kort från högen eller leken.
+TODO: Reflektion eller kodanalys med debugmodul för att göra kortnotation. Görs när Paolo uppdaterat ocaml-lua med debuginterfacet.
+
+move_card(card, target_slot, slot_nr)
+	animate
+	remove card from old slot
+	add card to new slot
+
+Blir ett "hack" när animationen slutar, innan ny information kommer in (update_table t.ex.)? När ska animeringen döljas? När första funktionen i callback körs? Eller att alla callbacks börjar med "hide_anim"? Eller att alla uppdateringsfunktioner alltid döljer anim, men inga andra? Kör man alltid en uppdatering i anim callback? Kodanalys?
+
+Kan man härleda en automatisk callbackfunktion utifrån dest och src? En callback behövs ändå om man vill kedja animationer.
+
+<pre>{
+	slot_type = "player_slot",
+	player = player,
+	slot_nr = 1
+}
+
+{
+	slot_type = "player_hand",
+	player = player2
+}
+
+{
+	slot_type = "table_slot",
+	slot_nr = 1
+}</pre>
+
+move_card(src, dest, callback)	-- Move single card?
+-- move_card(card, dest, callback)	-- How to find card?
+move_slot(src, dest, callback)	-- Move all cards in slot
+
+// Example
+move_card({slot_type = "player_hand", player = p, slot_nr = 0}, {slot_type = "table_slot", slot_nr = 2}, function() update_table; update_hand(p) end)
+-- move_card(card2, table_slots[0], function() update_table() end)
+-- move_card(card, "table_slots[0]")
+-- move_card(card, "player1.slots[1][#player1.slots + 1]")	-- Building a "mini language" to describe target? Or str_replace at loading?
+-- move_card(card, table_slot, 1, function() end)	-- src card, dest slot type, index, callback
+-- table_slot[0].offset.top, table_slot[0].offset.left
+-- update_offsets()
+-- card:move(table_slots[0])
+-- card:move("player1.hand")	-- Short notation? string.format("player%d.hand", p.player_nr)
+-- card:move("player1.slots")
+-- deck1:move(player1.hand)
+-- card:animate("")
+-- Animate.move_card
+-- __index meta table? to update offset everytime accessed?
+table_slots.__index = function(table, key) end
+
+-- Return slot type and location for @card
+function locate_card(card)
+	local location = {}
+	local card_nr = card.card_nr
+	-- Check for all players
+	for k, p in ipairs(players) do
+
+		-- Check hand
+		for k2, c in ipairs(p.hand) do
+			if c.card_nr == card_nr then
+				return {
+					slot_type = "player_hand",
+					player = p,
+					slot_nr = k2
+				}
+		end
+
+		-- Check player slots
+		for k2, c = ipairs(p.slots) do
+			-- Slot is a card
+			if c.__type == "card" and c.card_nr == card_nr then
+				return {
+					slot_type = "player_slot",
+					player = p,
+					slot_nr = k2
+				}
+			-- Slot is a deck
+			else if c.__type == "deck" then
+				for k3, c2 in ipairs(c.cards) do
+					if c2.card_nr == card_nr then
+						return {
+							slot_type = "player_slot",
+							player = p,
+							slot_nr = k3
+						}
+					end
+				end
+			end
+			-- Slot is an overlay/stack
+			else
+				for k3, c2 in ipairs(c) do
+					if c2.card_nr == card_nr then
+						return {
+							slot_type = "player_slot",
+							player = p,
+							slot_nr = k2,
+							index = k3
+						}
+					end
+				end
+			end
+		end
+	end
+	
+	-- If we're here, card does not belong to player, check table
+
+	for k, s in ipairs(table_slots) do
+		-- Slot is a card
+		if s.__type == "card" then
+			return {
+				slot_type = "table_slot",
+				slot_nr = k
+			}
+		-- Slot is a deck
+		else if s.__type == "deck" then
+			for k2, c in ipairs(s.cards) do
+				if c.card_nr == card_nr then
+					return {
+						slot_type = "table_slot",
+						slot_nr = k
+					}
+				end
+			end
+		end
+		-- Slot is an overlay/stack
+		else
+			for k2, c in ipairs(s) do
+				if c.card_nr == card_nr then
+					return {
+						slot_type = "table_slot",
+						slot_nr = k,
+						index = k2
+					}
+				end
+			end
+		end
+	end
+
+	// Should never be here
+	error("locate_card: did not find a card with card_nr " .. card_nr)
+
+end
+
+Kan inte flytta <td>, måste först dölja <td>, skapa en ny ovanför med absolut position och sen flytta den.
+
+
+
+var imgs = $('#hand1_slot1 > img');
+var old_img = $(imgs[0]);	// imgs[index]
+var pos = $(old_img).offset();
+var old_top = pos.top;
+var old_left = pos.left;
+var new_img = document.createElement('img');
+new_img.style.position = 'absolute';
+new_img.top = old_top + "px";
+new_img.left = old_left + "px";
+old_img.style.display = "none";			// Hide old img
+document.body.appendChild(new_img);	// Insert new img on top of old
+var dest_imgs = $('#table_slot1 > img');
+var dest_img = dest_imgs[dest_index];
+var dest_pos = $(dest_img).offset();
+var diff_top = old_top - dest_pos.top
+var diff_left = old_left - dest_pos.left
+if (diff_top > 0) {
+	diff_top_s = "+=" + diff_top + "px";
+}
+else if (diff_top < 0) {
+	diff_top_s = "-=" + abs(diff_top) + "px";
+}
+else {
+	// Abort, no difference
+	return;
+}
+
+if (diff_left > 0) {
+	diff_left_s = "+=" + diff_left + "px";
+}
+else if (diff_left < 0) {
+	diff_left_s = "-=" + abs(diff_left) + "px";
+}
+else {
+	// Abort, no difference
+	return;
+}
+$(new_img).animate({left: diff_left_s, top: diff_top_s});
+
+// Calculate destination coordinates
+switch (destination.type) {
+	case "table_slot";
+		break;
+}
+
+
+//var pos = div.offset();
+//pos.top, pos.left, pos.height(), pos.width()
+
+// Can't use card_nr, because user can hack "Card_facing_down"
+// var imgs = $('img');	
+// imgs.filter( function (el) { el.card_nr == card_nr })
+// if imgs.length > 1 then error
+// var img = imgs[0]
+// img = for all imgs, if img[i].card_nr == card_nr then return img[i]

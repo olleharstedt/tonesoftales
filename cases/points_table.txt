@@ -1,0 +1,47 @@
+Points table
+
+@since 2013-07-14
+@author Olle
+
+Tabell för poängräkning m.m.
+Ska kunna styra innehållet själv, men hur?
+
+Förslag 1:
+	points_table = {				-- Array av arrayer
+		__type = "points_table",
+		1 = {
+			__type = "row_head", 	-- Denna blir bolded
+			1 = "Name", 
+			2 = "Points"},
+		2 = {
+			1 = "Olle"
+			2 = 10
+		}
+	}
+
+Men i Yatzy vill man ha bolded på sidan, en kolumn? Två typer av tabeller, antingen ordnade efter rad eller kolumn?
+
+|--Name--|--Points--|
+|-Olle---|---5------|
+|-Anders-|---4------|
+
+|-------|--Olle----|--Anders--|
+|--1:or-|   3
+|--2:or-|               4
+|-par---|   12
+|-triss-|   15          18
+|-kåk---|
+
+Hur koda om man vill ha bold eller kursiv stil? Eller första raden är alltid fet?
+
+points_table = {
+	{"", "Olle", "Anders"},
+	{"Points", 0, 10},
+	{"Fusk", 1, 2}
+}
+
+points_table.style = {
+	bla?
+}
+
+update_points_table(points_table)

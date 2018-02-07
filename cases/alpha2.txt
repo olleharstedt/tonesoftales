@@ -1,0 +1,19 @@
+Påbörjad: 2013-05-25
+Avslutad: 2013-07-16
+
+Nya spel:
+	Kasino
+	Vändtia
+
+Ny funktionalitet:
+	Player slots, stack, overlay
+	card position
+	SSL login
+	action datastruktur
+	action: play_card
+	Standardlek
+	onbeginturn, onendturn
+
+Nya videos:
+	Shithead presentation
+	Tutorial: Markus och Kasino

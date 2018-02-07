@@ -1,0 +1,10 @@
+2013-11-04
+
+Ändra bredd, höjd etc på table_slots
+
+-- Ange storleken på varje CELL, inte bordet i sin helhet
+table_slots.width
+table_slots.height
+table_slots.rows
+table_slots.cols
+table_slots.title -- Legend

@@ -1,0 +1,9 @@
+2013-10-24
+
+Global chat på startsidan. Också invite?
+
+Funktioner:
+	Invite
+	Hide
+	Whisper
+	Start group?

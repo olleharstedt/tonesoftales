@@ -1,0 +1,75 @@
+2013-12-09
+
+Skicka pos, vel och acc till klient för att rita upp i 30 FPS.
+"Dum" klient, går inte att ha client-side prediction för måste då köra kod på klientsidan OCH serversidan. Översätta från Lua till JS? Finns program, men blir knepigt.
+
+lua:
+enable_realtime(6|30, function()	-- interpolation if it lags behind?
+	for _, p in ipairs(players) do
+		-- check keyboard state
+	end	
+	timesate = timestate + 1
+	--movables = {
+	--	{x_vel = 1...}
+	--}
+	update_movables(
+		duration,	-- Duration of milliseconds of this animation
+		card_list	-- Cards with position.x_vel|y_vel|top|left|rotate
+	)
+end)
+
+update_movables({ -- bara uppdatera om velocity ändrats? måste ändå köra egen move state 30 ggr/s
+	{x_vel = 1, y_vel = 0.5, pos = {55, 60}}
+})
+set_movables
+enable_movables(function()
+	movables = {
+		{x_vel = 1, card = card1, ...}
+	}
+	-- eller card.position.x_vel|y_vel, utöver left, top, rotate
+end)
+enable_movables(card_list)  -- each frame, check card for change in velocity. if yes, then update with new vel and pos. men om velocity ändras hela tiden?
+
+ocaml:
+
+(* send this 6 times each second? half-life sends 20 packets/s per default *)
+type movable_object = {
+	obj_id : int;		(* unique identifier of object. can be card_nr. *)
+	card : card;		(* Ne
+	x_acc : float;	(* include accelleration too? *)
+	y_acc : float;
+	x_vel : float; 	(* velocity *)
+	y_vel : float;
+	x : float;
+	y : float;
+}
+timestamp?
+
+javscript:
+keyboard_state_enabled = true|false
+keyboard_state = {} // {69: "Up"|"Down", char_code: state_string}
+setTimeout(function() {
+	// Loop all cards
+	for (var i = 0; i < cards.length; i++) {
+	}
+}, 33.33);
+
+client side prediction? behöver köra Lua-kod på klienten i så fall. lua VM i javascript? för osäkert? kontrollera koden, måste vara enkel? hur rätta om klient och server diffar? skicka ekvationer för rörelser till klienten? eget "skriptspråk" för att hantera dessa? använda den del av lua som är gemensam med javascript? t.ex. card1.position.left += 1. skicka sträng med javascript, som "x = x + 1"? för osäkert och omöjligt att kontrollera.
+
+eget litet skriptspråk, med "inc|decr left|top 1|number"
+collision detection på klientsida? måste i princip köra samma program som kontrollerar gamestate på server som på klient.
+
+skicka snapshot från server med timeframe number, och rätta klienten när denna når samma timeframe. servern måste alltså ligga före? måste också skicka keystate till varje klient. hur ofta ska keystate uppdateras? varje gång servern ser att den ändras. men det kan ju bli 30 ggr per sekund?
+
+interpolera move state mellan varje uppdatering 6 gånger per sekund? skicka velocity från sever?
+
+buffer move state, så att korrekt state från servern inte skriver över prediction hos klient.
+
+<script>
+	// code converted from Lua to JS
+	tonesoftales_fn1() {
+	}
+</script>
+
+proof-of-concept:
+bouncing ball, styr i x-led.

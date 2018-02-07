@@ -1,0 +1,10 @@
+2013-11-05
+
+Real time, kör en function 6 gånger per sekund?
+
+set_realtime(function() 
+  -- check conditions
+	-- move monsters
+end)
+
+unset_realtime() -- samma som set_real_time() utan arg?

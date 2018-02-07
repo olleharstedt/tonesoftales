@@ -1,0 +1,16 @@
+Version: alpha4
+Påbörjad: 2013-10-20
+Avslutad:
+Planerad release: 2013-12-20
+
+Cases:
+	Dice
+	Ads
+	Points table
+	Save state/table
+	Gadgets: select, dialog, input
+	Players online now/global chat
+
+Games:
+	Yatzy
+	Texas Hold'em
