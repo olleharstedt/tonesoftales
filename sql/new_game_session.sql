@@ -54,8 +54,8 @@ BEGIN
         set _port = _port + 1;
     end if;
 
-    INSERT INTO ds_game_session(user_id, game_id, password, public, `comment`, port, debug, created)
-    VALUES(user_id, game_id, password, public, `comment`, _port, debug, now());
+    INSERT INTO ds_game_session(user_id, game_id, password, public, `comment`, port, debug, created, started, ended)
+    VALUES(user_id, game_id, password, public, `comment`, _port, debug, now(), null, null);
 
     SET id = last_insert_id();
     SET out_port = _port;
