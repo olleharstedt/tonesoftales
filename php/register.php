@@ -89,7 +89,7 @@ if (isset($_POST['op']) && $_POST['op'] == "create_user") {
 	// Save user
 	$stmt = $pdo->prepare("INSERT INTO ds_user(username, password, email, newsletter) VALUES(?, ?, ?, ?)");
 	try {
-		$stmt->execute(array($username, $pwd_md5, $email, $_POST['newsletter'] == "on"));
+		$stmt->execute(array($username, $pwd_md5, $email, (int) $_POST['newsletter'] == "on"));
 		echo "Account registred. Please <a href='/cgi-bin/drakskatten?op=login_form&module=user'>login</a> to proceed.<br>";
 
 	}
