@@ -3530,6 +3530,7 @@ open Operation
  *    @return           unit? lwt?
  *)
 let start_websocket env =
+  log "start websocket";
 	let addr_inet = Unix.ADDR_INET (Unix.inet_addr_of_string env#addr, env#port) in
 	let sock_listen = Lwt_unix.socket Unix.PF_INET Unix.SOCK_STREAM 0 in
 
@@ -3570,10 +3571,12 @@ let start_websocket env =
 	(* We want stacktrace *)
 	Printexc.record_backtrace true;
 
+  log "before timeout()";
 	ignore(timeout());
 
 	game_state := Lobby;
 
+  log "before run main sock_listen env";
 	Lwt_main.run (main sock_listen env)
 ;;
 
