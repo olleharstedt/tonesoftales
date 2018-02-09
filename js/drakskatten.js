@@ -485,15 +485,13 @@ function start_chat() {
 	Commands the server to startup a websocket listener CGI.
 	If success, make a websocket that connects to it.
 
-	DEFINED IN OCAML, jstest.ml, SINCE 2013-08-08
-
 	@param addr		string; Address of server
 	@param port		int
 	@param game_session_id	int
 	@param pwd		boolean; true if password is used for this session
 */
-/*
 function open_new_lobby(addr, port, game_session_id, pwd) {
+  console.log('open_new_lobby', addr, port, game_session_id);
 	var data = {
 		module: "gamesession",
 		op: "open_new_lobby",
@@ -511,8 +509,8 @@ function open_new_lobby(addr, port, game_session_id, pwd) {
 			console.log(textStatus);
 		}
 	});
+  setTimeout(function() { new_websocket(addr, port, pwd); }, 1200);
 }
-*/
 
 /**
  * 	Show deck menus for players turn, hide for others
