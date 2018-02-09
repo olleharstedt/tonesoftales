@@ -238,7 +238,7 @@ let _ =
 
                   (* Flush output to prevent CGI timeout *)
                   args.echo "\"Ok\"";
-                  args.cgi#out_channel#commit_work ();
+                  args.cgi#out_channel#commit_work();
                   args.cgi#out_channel#close_out();
 
                   (* Environment/state for thread *)

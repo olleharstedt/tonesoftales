@@ -94,6 +94,8 @@ cp: drakskatten_cgi.exe drakskatten_ajax.exe
 .PHONY: all clean sql install
 all: drakskatten_cgi.exe drakskatten_ajax.exe drakskatten_js css tmpls php_ secure_php jstest.js cp
 
+ajax: drakskatten_ajax.exe
+
 clean:
 	@rm *.cmx *.cmi *.o controller/*.cmx controller/*.cmi controller/*.o *.exe
 
