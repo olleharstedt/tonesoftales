@@ -179,8 +179,8 @@ let _ =
 		(* Get all games not started (in lobby) *)
 		let game_sessions = list_of_game_session 
 			args.db [
-				("started", "0000-00-00 00:00:00"); 
-				("ended", "0000-00-00 00:00:00");
+				("started", "1900-01-01 00:00:00"); 
+				("ended", "1900-01-01 00:00:00");
 				("public", "1");
 				("websocket_connected", "1");
 			]

@@ -55,7 +55,7 @@ BEGIN
     end if;
 
     INSERT INTO ds_game_session(user_id, game_id, password, public, `comment`, port, debug, created, started, ended)
-    VALUES(user_id, game_id, password, public, `comment`, _port, debug, now(), null, null);
+    VALUES(user_id, game_id, password, public, `comment`, _port, debug, now(), "1900-01-01 00:00:00", "1900-01-01 00:00:00");
 
     SET id = last_insert_id();
     SET out_port = _port;
